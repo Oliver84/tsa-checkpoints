@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import { Doughnut, Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import { tsaData } from './data.js';
 import "./style.css";
 
@@ -22,20 +22,20 @@ class App extends Component {
         {
           label: "2020",
           data: tsaData.map(entry => formatNum(entry[1])),
-          backgroundColor: "rgba(0, 0, 255, 0.2))",
-          borderColor: "rgba(20, 39, 255, 0.8)",
+          backgroundColor: "rgba(255, 0, 0, 0.4)",
+          borderColor: "rgba(255, 0, 0, 1)",
           borderWidth: 1,
-          fill: false,
+          fill: 1,
           yAxisID: "y-axis-1",
         },
         {
           label: "2020 vs 2019",
           data: tsaData.map(entry => (formatNum(entry[1])/formatNum(entry[2]))*100),
-          backgroundColor: "rgba(0, 0, 255, .2)",
-          borderColor: "rgba(0, 0, 255, 0.5)",
+          backgroundColor: "rgba(0, 0, 100, .5)",
+          borderColor: "rgba(0, 0, 100, .5)",
           borderWidth: 1,
           fill: false,
-          type: 'bar',
+          type: 'line',
           yAxisID: "y-axis-2",
         }
       ]
@@ -45,11 +45,15 @@ class App extends Component {
       tooltips: {
         callbacks: {
           label: function(tooltipItems, data) {
-            return data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].toLocaleString();
+            const amount = data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].toLocaleString();
+            return amount < 100 ? Math.round(amount) + ' %' : amount;
           }
         }
       },
       scales: {
+        xAxes: [{
+          stacked: true
+        }],
         yAxes: [
           {
             ticks: {
@@ -85,7 +89,7 @@ class App extends Component {
       <div>
         <h1>TSA Checkpoints</h1>
         <p>Total Traveler Throughput</p>
-        <Line id="chart" data={data} options={options} />
+        <Bar id="chart" data={data} options={options} />
       </div>
     );
   }
