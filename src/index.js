@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import Hello from "./Hello";
 import { Doughnut, Line } from "react-chartjs-2";
 import { tsaData } from './data.js';
 import "./style.css";
