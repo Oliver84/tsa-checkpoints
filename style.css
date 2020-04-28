@@ -1,0 +1,9 @@
+h1, p {
+  font-family: Lato;
+}
+
+#chart {
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+}
