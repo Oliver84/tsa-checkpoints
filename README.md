@@ -1,3 +1,3 @@
 # tsa-checkpoints
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/tsa-checkpoints)
+Visualizing data from TSA to compare our YOY traveler throughput
