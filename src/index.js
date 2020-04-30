@@ -20,7 +20,6 @@ class App extends Component {
     .catch(err => console.error(err));
   }
   render() {
-    console.log(this.state)
     const { checkpoints } = this.state;
     const formatNum = num => parseInt(num.replace(',','').replace(',',''));
     const data = {
@@ -43,16 +42,6 @@ class App extends Component {
           borderWidth: 1,
           fill: 1,
           yAxisID: "y-axis-1",
-        },
-        {
-          label: "2020 vs 2019",
-          data: checkpoints.map(entry => (formatNum(entry['2019'])/formatNum(entry['2020']))*100),
-          backgroundColor: "rgba(0, 0, 100, .5)",
-          borderColor: "rgba(0, 0, 100, .5)",
-          borderWidth: 1,
-          fill: false,
-          type: 'line',
-          yAxisID: "y-axis-2",
         }
       ]
     };
@@ -63,6 +52,12 @@ class App extends Component {
           label: function(tooltipItems, data) {
             const amount = data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].toLocaleString();
             return amount < 100 ? Math.round(amount) + ' %' : amount;
+          },
+          footer: (tooltipItems, data) => {
+            const data2019 = data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index];
+            const data2020 = data.datasets[0].data[tooltipItems[0].index];
+            const percentValue = Math.round(data2019/data2020 * 100);
+            return `${percentValue} %`;
           }
         }
       },
@@ -84,34 +79,9 @@ class App extends Component {
             position: "left",
             id: "y-axis-1",
           },
-          {
-            ticks: {
-              beginAtZero: false,
-              callback: function(value, index, values) {
-                return value.toLocaleString();
-              }
-            },
-            stacked: false,
-            type: "linear",
-            display: true,
-            position: "right",
-            id: "y-axis-2",
-          }
         ]
       }
     };
-
-    
-
-    // tsaData.forEach(entry => {
-    //   database.collection("checkpoints").add({
-    //     date: new Date(entry[0]),
-    //     2019: entry[1],
-    //     2020: entry[2]
-    //   })
-    //   .then(() => console.log('doc written'))
-    //   .catch(err => console.error(err));
-    // })
 
     return (
       <div>
