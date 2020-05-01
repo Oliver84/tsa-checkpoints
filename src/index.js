@@ -32,19 +32,19 @@ class App extends Component {
       labels: checkpoints.map(entry => entry.date.toDate().toLocaleDateString()),
       datasets: [
         {
-          label: "2019",
+          label: "Travelers in 2019",
           data: checkpoints.map(entry => this.formatNum(entry['2020'])),
-          backgroundColor: "rgba(255, 99, 132, 0.2)",
-          borderColor: "rgba(255, 99, 132, 1)",
+          backgroundColor: "rgba(0, 102, 153, 0.2)",
+          borderColor: "rgba(0, 102, 153, 1)",
           borderWidth: 1,
           fill: 1,
           yAxisID: "y-axis-1",
         },
         {
-          label: "2020",
+          label: "Travelers in 2020",
           data: checkpoints.map(entry => this.formatNum(entry['2019'])),
-          backgroundColor: "rgba(255, 0, 0, 0.4)",
-          borderColor: "rgba(255, 0, 0, 1)",
+          backgroundColor: "rgba(0, 102, 153, 0.6)",
+          borderColor: "rgba(0, 102, 153, 1)",
           borderWidth: 1,
           fill: 1,
           yAxisID: "y-axis-1",
@@ -95,9 +95,12 @@ class App extends Component {
     const dailyChange = getCheckpoints(2019, 1)/ getCheckpoints(2020, 1)/getCheckpoints(2019, 58)/ getCheckpoints(2020, 58)
     return (
       <div class="container">
-        <h1>TSA Passenger Throughput</h1>
+        <div class="title">
+          <h1>TSA</h1>
+          <h2>Traveler Throughput</h2>
+        </div>
         {/* <span className="change-text">Daily change: {!loading && Math.round(dailyChange)}%</span><span className="arrow-down"></span> */}
-        <span className="change-text">YoY change: {!loading && Math.round(yoyChange)}% </span><span className="arrow-down"></span>
+        <span className="change-text">Year over year change: {!loading && Math.round(yoyChange)}% </span><span className="arrow-down"></span>
         <Bar id="chart" data={data} options={options} />
       </div>
     );
