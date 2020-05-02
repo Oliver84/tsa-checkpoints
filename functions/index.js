@@ -16,16 +16,11 @@ exports.scrape = functions.https.onRequest(async (req, res) => {
   const site = await fetchHTML(
     'https://www.tsa.gov/coronavirus/passenger-throughput'
   );
-  console.log(
-    new Date(
-      `${site('tbody tr:nth-child(2) td:nth-child(1)').text()} 00:00:00 +0500`
-    )
-  );
   db.collection('checkpoints')
     .doc()
     .set({
       date: new Date(
-        `${site('tbody tr:nth-child(2) td:nth-child(1)').text()} 00:00:00 +0500`
+        `${site('tbody tr:nth-child(2) td:nth-child(1)').text()} 05:00:00 +0000`
       ),
       '2019': site('tbody tr:nth-child(2) td:nth-child(2)').text(),
       '2020': site('tbody tr:nth-child(2) td:nth-child(3)').text(),
