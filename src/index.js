@@ -69,7 +69,13 @@ class App extends Component {
       },
       scales: {
         xAxes: [{
-          stacked: true
+          stacked: true,
+          type: "time",
+          ticks: {
+            source: "auto",
+          },
+          bounds: "data",
+          offset: true,
         }],
         yAxes: [
           {
@@ -86,7 +92,7 @@ class App extends Component {
             id: "y-axis-1",
           },
         ]
-      }
+      },
     };
 
     const getCheckpoints = (year, index) => this.formatNum(propOr('0', year, checkpoints[checkpoints.length - index]));
