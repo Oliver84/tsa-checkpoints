@@ -28,7 +28,7 @@ class App extends Component {
         this.setState({ checkpoints, loading: false });
       })
       .catch((err) => console.error(err));
-    if (window.screen.width < 800) {
+    if (window.screen.width < 768) {
       this.setState({ isMobile: true });
     }
   }
@@ -66,9 +66,6 @@ class App extends Component {
           barThickness: 'flex',
           datalabels: {
             formatter: (value, context) => {
-              // console.log('value: ', value)
-              // console.log('context: ', context)
-              // console.log('context: ', context.chart.data.datasets[context.datasetIndex])
               const data2019 =
                 context.chart.data.datasets[context.datasetIndex].data[
                   context.dataIndex
@@ -136,7 +133,7 @@ class App extends Component {
             type: 'time',
             distribution: 'linear',
             ticks: {
-              source: 'data',
+              source: 'auto',
               min: new Date(
                 propOr(
                   '',
@@ -195,11 +192,12 @@ class App extends Component {
 
     const yoyChange =
       100 - (getCheckpoints(2019, 1) / getCheckpoints(2020, 1)) * 100;
-    const dailyChange = Math.ceil(
+    const dailyChange =
       100 -
         yoyChange -
         (getCheckpoints(2019, 2) / getCheckpoints(2020, 2)) * 100
-    );
+    const getDailyChangePercent = dailyChange > 0 ? Math.ceil(Math.abs(dailyChange)) : Math.ceil(Math.abs(dailyChange)) * -1
+
     return (
       <div className="container">
         <div
@@ -214,11 +212,11 @@ class App extends Component {
             <p className="title-subtitle">Traveler Throughput</p>
           </div>
           <span className="change-text">
-            Daily: {!loading && Math.round(dailyChange)}%
+            Daily: {!loading && Math.round(getDailyChangePercent)}%
           </span>
           <span className={dailyChange > 0 ? "arrow-up" : "arrow-down"}></span>
           <span className="change-text">
-            Year over year: {!loading && Math.round(yoyChange)}%{' '}
+            Year over year: -{!loading && Math.round(yoyChange)}%{' '}
           </span>
           <span className="arrow-down"></span>
           <Bar id="chart" data={data} options={options} />

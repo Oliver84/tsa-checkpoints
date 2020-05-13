@@ -80,7 +80,7 @@ span {
   margin-right: 2rem;
 }
 
-@media only screen and (max-device-width: 960px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) {
+@media only screen and (max-device-width: 768px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) {
   .chart {
     margin-top: 10%;
   }
